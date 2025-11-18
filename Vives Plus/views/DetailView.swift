@@ -12,24 +12,28 @@ struct DetailView: View {
     var  picked : EventModel?
     
     var body: some View {
-        if picked == nil
-        {
-            Text("choose an event")
-        }
-        else {
-            VStack{
-                Text(picked!.title)
-                if picked!.type == 0
-                {
-                    Text("Academic")
-                }
-                else
-                {
-                    Text("Event")
-                }
+        VStack{
+            if picked == nil
+            {
+                Text("choose an event")
+            }
+            else {
+                VStack{
+                    Text(picked!.title)
+                    if picked!.type == 0
+                    {
+                        Text("Academic")
+                    }
+                    else
+                    {
+                        Text("Event")
+                    }
+                    
+                }.toolbar {
+                    NavigationLink(destination: UpdateView(eventModel: picked!)) {
+                        Image(systemName: "ellipsis")}}
                 
             }
         }
     }
 }
-

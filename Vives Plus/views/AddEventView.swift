@@ -8,36 +8,37 @@
 import SwiftUI
 
 struct AddEventView: View {
-    @State var titel : String = ""
-    @State var location : String = ""
-    @State var allDay : Bool = false
-    @State var startdate : Date = Date.now
-    @State var enddate : Date  = Date.now
-    @State var type : Bool = true
+    
+    @State var eventModel : EventModel = EventModel()
     @Environment(UurroosterDataStore.self) private var dataStore
     var body: some View {
         VStack{
             Text("Add Event")
             HStack{
                 Text("Title")
-                TextEditor(text: $titel)
+                TextEditor(text: $eventModel.title)
             }
             HStack{
                 Text("Location")
-                TextEditor(text: $location)
+                TextEditor(text: $eventModel.location)
             }
-            Toggle("All day?", isOn: $allDay)
+            Toggle("All day?", isOn: $eventModel.allDay)
             Text("Start Date and time")
-            DatePicker("", selection: $startdate)
+            DatePicker("", selection: $eventModel.startDateTime)
             Text("end Date and time")
-            DatePicker("", selection: $enddate)
+            DatePicker("", selection: $eventModel.endDateTime)
             HStack{
                 Text("Type")
-                Toggle("", isOn: $type ).toggleStyle(.switch)
+                Picker(selection: $eventModel.type, label: Text("Type")) {
+                                            Text("Academic").tag(0)
+                                            Text("Course").tag(1)
+                                        }.pickerStyle(SegmentedPickerStyle()).padding(.all , 4)
+                //Toggle("", isOn: $eventModel.type ).toggleStyle(.switch)
             }
             HStack{
                 Button("apply") {
-                    dataStore.addEvent(event: EventModel())
+                    
+                    dataStore.addEvent(event :eventModel)
                 }
             }
         }

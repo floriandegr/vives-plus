@@ -22,7 +22,24 @@ class UurroosterDataStore {
     func addEvent(event: EventModel ){
         uurrooster?.append(event)
     }
-    func addEvent(title : String, location : String){
+    func addEvent(title : String, location : String, startDate : Date, endDate : Date, type : Int, allday : Bool, id : String){
+        let event = EventModel()
+        event.type = type
+        event.title = title
+        event.location = location
+        event.startDateTime = startDate
+        event.endDateTime = endDate
+        event.allDay = allday
+        if id == "no id"
+        {
+            event.id = String(uurrooster!.count+1)
+            uurrooster?.append(event)}
+        else
+        {
+            event.id = id
+        }
+        
+        
         
     }
     

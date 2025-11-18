@@ -8,11 +8,48 @@
 import SwiftUI
 
 struct UpdateView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        @State var eventModel : EventModel
+        
+        @Environment(UurroosterDataStore.self) private var dataStore
+        var body: some View {
+            
+            VStack{
+                Text("Add Event")
+                HStack{
+                    Text("Title")
+                    TextEditor(text: $eventModel.title)
+                }
+                HStack{
+                    Text("Location")
+                    TextEditor(text: $eventModel.location)
+                }
+                Toggle("All day?", isOn: $eventModel.allDay)
+                Text("Start Date and time")
+                DatePicker("", selection: $eventModel.startDateTime)
+                Text("end Date and time")
+                DatePicker("", selection: $eventModel.endDateTime)
+                HStack{
+                    Text("Type")
+                    Picker(selection: $eventModel.type, label: Text("Type")) {
+                                                Text("Academic").tag(0)
+                                                Text("Course").tag(1)
+                                            }.pickerStyle(SegmentedPickerStyle()).padding(.all , 4)
+                    //Toggle("", isOn: $type ).toggleStyle(.switch)
+                }
+                HStack{
+                    Button("cancel") {
+                        
+                    }
+                    Button("update") {
+                        
+                        
+                        dataStore.updateEvent(event: eventModel)
+                        
+                    }
+                }
+            }
+        }
     }
-}
 
-#Preview {
-    UpdateView()
-}
+
+
